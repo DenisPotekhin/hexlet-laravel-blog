@@ -6,6 +6,13 @@ use App\Article;
 
 class ArticleController extends Controller
 {
+
+    public function show($id)
+    {
+        $article = Article::findOrFail($id);
+        return view('article.show', compact('article'));
+    }
+
     public function index()
     {
         $articles = Article::paginate();
