@@ -50,18 +50,26 @@ class ArticleController extends Controller
         return view('article.index', compact('articles'));
     }
 
-    
-
     public function edit($id)
     {
         $article = Article::findOrFail($id);
         return view('article.edit', compact('article'));
     }
 
+    public function destroy($id)
+    {
+        // DELETE идемпотентный метод, поэтому результат операции всегда один и тот же
+        $article = Article::find($id);
+        if ($article) {
+        $article->delete();
+        }
+        return redirect()->route('articles.index');
+    }
+
     public function update(Request $request, $id)
     {
-    $article = Article::findOrFail($id);
-    $this->validate($request, [
+        $article = Article::findOrFail($id);
+        $this->validate($request, [
         // У обновления немного измененная валидация. В проверку уникальности 
         'name' => 'required|unique:articles,name,' . $article->id,
         'body' => 'required|min:100',
