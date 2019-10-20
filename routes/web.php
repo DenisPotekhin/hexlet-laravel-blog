@@ -29,6 +29,12 @@ Route::get('/articles/create', 'ArticleController@create')
 Route::get('/articles/{id}', 'ArticleController@show')
   ->name('articles.show');
 
+Route::get('/articles/{id}/edit', 'ArticleController@edit')
+  ->name('articles.edit');
+
+Route::patch('/articles/{id}', 'ArticleController@update')
+  ->name('articles.update');
+
 // Route::get('/about', function () {
 //    return view('about');
 //});
