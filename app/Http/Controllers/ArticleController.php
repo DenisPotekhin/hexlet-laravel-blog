@@ -3,9 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
+
+    public function create()
+    {
+        // Передаем в шаблон вновь созданный объект. Он нужен для вывода формы 
+        $article = new Article();
+        return view('article.create', compact('article'));
+    }
+
+    public function store(Request $request)
+    {
+        // Проверка введенных данных
+        // Если будут ошибки, то возникнет исключение
+        $this->validate($request, [
+            'name' => 'required|unique:articles',
+            'body' => 'required|min:1000',
+        ]);
+
+        $article = new Article();
+        // Заполнение статьи данными из формы
+        $article->fill($request->all());
+        // При ошибках сохранения возникнет исключение
+        $article->save();
+
+        // Редирект на указанный маршрут с добавлением флеш сообщения
+        return redirect()
+            ->route('articles.index');
+    }
 
     public function show($id)
     {
