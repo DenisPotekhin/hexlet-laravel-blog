@@ -49,7 +49,7 @@ class ArticleController extends Controller
         // При ошибках сохранения возникнет исключение
         $article->save();
         // Редирект на указанный маршрут с добавлением флеш сообщения
-        $request->session()->flash('status', 'Объект создан');
+        $request->session()->flash('flash_message', 'Объект создан');
         return redirect()
             ->route('articles.index');
     }
@@ -91,6 +91,7 @@ class ArticleController extends Controller
          ]);
          $article->fill($request->all());
          $article->save();
+         $request->session()->flash('flash_message', 'Объект создан');
          return redirect()
               ->route('articles.index');
     }
