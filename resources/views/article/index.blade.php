@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@if (Session::has('flash_message'))
+	{{ Session::get('flash_message') }}
+@endif
+
 @section('content')
     <h1>Список статей</h1>
     @foreach($articles as $article)
